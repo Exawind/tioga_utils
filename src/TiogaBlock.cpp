@@ -7,6 +7,7 @@
 #include "stk_util/parallel/ParallelReduce.hpp"
 #include "stk_mesh/base/FieldParallel.hpp"
 #include "stk_mesh/base/FieldBLAS.hpp"
+#include "stk_mesh/base/GetNgpMesh.hpp"
 
 #include <numeric>
 #include <iostream>
@@ -222,6 +223,10 @@ void TiogaBlock::update_iblank_cell()
   auto& iblank_ngp = stk::mesh::get_updated_ngp_field<double>(*ibf);
   ngp::run_entity_algorithm(
       "update_iblanks", stk::mesh::get_updated_ngp_mesh(bulk_),
+<<<<<<< HEAD
+=======
+      //"update_iblanks", bulk_.get_updated_ngp_mesh(),
+>>>>>>> caa4fd1 (First changes to compile with current version of Trilinos)
       stk::topology::ELEM_RANK, mesh_selector,
       KOKKOS_LAMBDA(const typename Traits::MeshIndex& mi) {
           auto elem = (*mi.bucket)[mi.bucketOrd];
