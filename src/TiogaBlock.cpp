@@ -15,10 +15,7 @@
 
 #include "TiogaMeshInfo.h"
 #include "tioga.h"
-
-extern "C" {
-double computeCellVolume(double xv[8][3],int nvert);
-}
+#include "tioga_math.h"
 
 namespace tioga_nalu {
 namespace {
@@ -164,6 +161,7 @@ TiogaBlock::update_iblanks()
 {
   ScalarFieldType* ibf =
     meta_.get_field<ScalarFieldType>(stk::topology::NODE_RANK, "iblank");
+  ibf->sync_to_device();
   auto timeMon = get_timer("TiogaBlock::update_iblanks");
 
   stk::mesh::Selector mesh_selector = stk::mesh::selectUnion(blkParts_)
@@ -223,10 +221,6 @@ void TiogaBlock::update_iblank_cell()
   auto& iblank_ngp = stk::mesh::get_updated_ngp_field<double>(*ibf);
   ngp::run_entity_algorithm(
       "update_iblanks", stk::mesh::get_updated_ngp_mesh(bulk_),
-<<<<<<< HEAD
-=======
-      //"update_iblanks", bulk_.get_updated_ngp_mesh(),
->>>>>>> caa4fd1 (First changes to compile with current version of Trilinos)
       stk::topology::ELEM_RANK, mesh_selector,
       KOKKOS_LAMBDA(const typename Traits::MeshIndex& mi) {
           auto elem = (*mi.bucket)[mi.bucketOrd];
