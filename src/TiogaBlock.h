@@ -5,7 +5,6 @@
 #include <stk_mesh/base/BulkData.hpp>
 #include <stk_mesh/base/Entity.hpp>
 #include <stk_mesh/base/Field.hpp>
-#include <stk_mesh/base/CoordinateSystems.hpp>
 
 #include "yaml-cpp/yaml.h"
 
@@ -21,9 +20,9 @@ class MeshBlockInfo;
 
 namespace tioga_nalu {
 
-typedef stk::mesh::Field<double, stk::mesh::Cartesian> VectorFieldType;
+typedef stk::mesh::Field<double> VectorFieldType;
 typedef stk::mesh::Field<double> ScalarFieldType;
-typedef stk::mesh::Field<double, stk::mesh::SimpleArrayTag> GenericFieldType;
+typedef stk::mesh::Field<double> GenericFieldType;
 
 struct NgpTiogaBlock
 {
